@@ -1,8 +1,9 @@
 <?php
 function move_custom_post_type_to_posts() {
-    $custom_post_type = 'your_custom_post_type'; // Replace with your custom post type slug.
+    $old_post_type = 'your_custom_post_type'; // Replace with your custom post type slug.
+    $new_post_type = 'post';
     $args = array(
-        'post_type' => $custom_post_type,
+        'post_type' => $old_post_type,
         'posts_per_page' => -1,
         'post_status' => 'any', // Include drafts, pending, etc.
     );
@@ -17,13 +18,13 @@ function move_custom_post_type_to_posts() {
             // Update the post type
             wp_update_post(array(
                 'ID' => $post_id,
-                'post_type' => 'post',
+                'post_type' => $new_post_type,
             ));
         }
         wp_reset_postdata();
-        echo 'All posts have been moved to "Posts".';
+        echo 'All "'.$old_post_type.'" have been moved to "'.$new_post_type.'".';
     } else {
-        echo 'No posts found for the custom post type.';
+        echo 'No posts found for '.$old_post_type.'.';
     }
 }
 
